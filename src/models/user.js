@@ -41,6 +41,5 @@ module.exports = (sequelize, DataTypes) => {
     user.password = encodedPassword;
   }
   );
-
   return User;
 };
