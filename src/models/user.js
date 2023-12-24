@@ -4,7 +4,6 @@ const {
 } = require('sequelize');
 const { SALT } = require('../config/serverConfig');
 const bcrypt = require("bcrypt");
-
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
     /**
@@ -13,7 +12,9 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
+      this.belongsToMany(models.Role, {
+        through: 'User_Roles',
+      });
     }
   }
   User.init({

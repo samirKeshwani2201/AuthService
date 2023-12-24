@@ -38,7 +38,7 @@ class UserService {
             const response = this.verifyToken(token);
             if (!response) {
                 throw { error: "Invalid Token" };
-            }
+            }   
             const user = await this.userRepository.getById(response.id);
             if (!user) {
                 throw { error: "User Not found with current token" };
