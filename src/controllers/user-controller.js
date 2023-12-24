@@ -44,7 +44,29 @@ const signIn = async (req, res) => {
     }
 };
 
+const isAuthenticated = async (req, res) => {
+    try {
+        const token = req.headers['x-access-token'];
+        const response = await userService.isAuthenticated(token);
+        return res.status(200).json({
+            success: true,
+            err: {},
+            data: response,
+            message: 'User Authenticated and Token is valid '
+        });
+        // const result =   userService.verifyToken(token);
+        // now its possible that the user deleted the account then more logic needs to be involved so write it in the service layer
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({
+            data: {},
+            message: "Something went wrong  ",
+            err: error,
+            success: false
+        });
+    }
+};
 
 module.exports = {
-    create, signIn
+    create, signIn, isAuthenticated
 };

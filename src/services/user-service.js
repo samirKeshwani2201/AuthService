@@ -33,6 +33,22 @@ class UserService {
             throw error;
         }
     }
+    async isAuthenticated(token) {
+        try {
+            const response = this.verifyToken(token);
+            if (!response) {
+                throw { error: "Invalid Token" };
+            }
+            const user = await this.userRepository.getById(response.id);
+            if (!user) {
+                throw { error: "User Not found with current token" };
+            }
+            return user.id;
+        } catch (error) {
+            console.log("Something went wrong on service layer ");
+            throw error;
+        }
+    }
     createToken(user) {
         try {
             const result = jwt.sign(user, JWT_KEY, { expiresIn: "1d" });
